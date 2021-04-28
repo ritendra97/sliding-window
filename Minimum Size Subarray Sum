@@ -1,0 +1,37 @@
+//Minimum Size Subarray Sum
+
+// TC-> O(n)
+// SC-> O(1)
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        
+        if(nums==null || nums.length==0)
+            return 0;
+        
+        int i=0;
+        int j=0;
+        int sum=0;
+        int min_len = Integer.MAX_VALUE;
+        int n = nums.length;
+        
+        while(j<n){
+            
+            if(sum<target){
+                sum+=nums[j];
+                j++;
+            }else{
+                min_len = Math.min(min_len , j-i);
+                if(i==j-1)
+                    return 1;
+                sum = sum-nums[i];
+                i++;
+            }
+        }
+        while(sum>=target){
+            min_len = Math.min(min_len,j-i);
+            sum = sum-nums[i];
+            i++;
+        }
+        return min_len==Integer.MAX_VALUE?0:min_len;
+    }
+}
