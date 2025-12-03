@@ -1,0 +1,31 @@
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int[] hash = new int[256];
+
+        // initialize all as -1 (not seen)
+        Arrays.fill(hash, -1);
+
+        int l = 0;
+        int maxLen = 0;
+
+        for (int r = 0; r < n; r++) {
+
+            // if char seen before
+            if (hash[s.charAt(r)] != -1) {
+                // if repeating inside window → move left pointer
+                if (hash[s.charAt(r)] >= l) {
+                    l = hash[s.charAt(r)] + 1;
+                }
+            }
+
+            // calculate window length
+            maxLen = Math.max(maxLen, r - l + 1);
+
+            // update last seen index
+            hash[s.charAt(r)] = r;
+        }
+
+        return maxLen;
+    }
+}
